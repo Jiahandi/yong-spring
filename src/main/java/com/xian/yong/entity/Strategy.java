@@ -14,7 +14,7 @@ public class Strategy {
     private String straTitle;
     private String straScenic;
     private Integer straThemeid;
-    private String straThemeName;
+    private String straThemename;
     private String straContent;
     private Date straTime;
     private String straLove;

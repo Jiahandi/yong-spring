@@ -9,6 +9,7 @@ import lombok.Data;
 public class Admin {
     @TableId(type = IdType.AUTO) //指定主键类型
     private Integer adid;
+    private String adname;
     private String adpassword;
     private Integer type;
 

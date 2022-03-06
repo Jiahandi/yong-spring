@@ -1,5 +1,6 @@
 package com.xian.yong.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -9,6 +10,7 @@ import com.xian.yong.mapper.AdminMapper;
 import com.xian.yong.service.AdminService;
 import com.xian.yong.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +22,16 @@ public class AdminController {
     private AdminMapper adminMapper;
     @Autowired
     private AdminService adminService;
+
+    @PostMapping("/login")
+    public boolean login(@RequestBody Admin admin){
+        String adname = admin.getAdname();
+        String adpassword = admin.getAdpassword();
+        if(StrUtil.isBlank(adname) || StrUtil.isBlank(adpassword)){
+            return false;
+        }
+        return adminService.login(admin);
+    }
 
     @PostMapping
     public boolean save(@RequestBody Admin admin) {

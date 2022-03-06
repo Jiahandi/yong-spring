@@ -51,7 +51,7 @@ public class ScenicController {
         if(!"".equals(sceThemeName)){
             queryWrapper.like("sceThemeName",sceThemeName);
         }
-        queryWrapper.orderByDesc("scenicId");
+        queryWrapper.orderByDesc("scenic_id");
         return scenicService.page(page,queryWrapper);
     }
 

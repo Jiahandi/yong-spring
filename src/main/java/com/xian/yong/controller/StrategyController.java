@@ -50,7 +50,7 @@ public class StrategyController {
         if(!"".equals(straThemeName)){
             queryWrapper.like("straThemeName",straThemeName);
         }
-        queryWrapper.orderByDesc("id");
+        queryWrapper.orderByDesc("strategy_id");
         return strategyService.page(page,queryWrapper);
     }
 

@@ -13,9 +13,9 @@ public class Scenic {
     private String sceName;
     private String sceIntro;
     private String sceAddress;
-    private String sceOpenTime;
-    private Integer sceThemeId;
-    private String sceThemeName;
+    private String sceOpentime;
+    private Integer sceThemeid;
+    private String sceThemename;
     private Double sceScore;
     private Double scePrice;
     private String sceTel;
