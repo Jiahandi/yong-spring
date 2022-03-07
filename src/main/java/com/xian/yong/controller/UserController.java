@@ -35,8 +35,8 @@ public class UserController {
         return userService.list();
     }
 
-    @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable Integer id){//传id
+    @DeleteMapping("/delete")
+    public boolean delete(@RequestParam Integer id){//传id
         //删除
         return userService.removeById(id);
     }

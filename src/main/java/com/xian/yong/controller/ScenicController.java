@@ -31,8 +31,8 @@ public class ScenicController {
     public List<Scenic> findAll() {
         return scenicService.list();
     }
-    @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable Integer id){//传id
+    @DeleteMapping("/delete")
+    public boolean delete(@RequestParam Integer id){//传id
         //删除
         return scenicService.removeById(id);
     }
@@ -41,15 +41,15 @@ public class ScenicController {
     public IPage<Scenic> findPage(@RequestParam Integer pageNum,
                                  @RequestParam Integer pageSize,
                                  @RequestParam(defaultValue = "") String sceName,
-                                  @RequestParam(defaultValue = "") String sceThemeName
+                                  @RequestParam(defaultValue = "") String sceThemeid
     ){
         IPage<Scenic> page = new Page<>(pageNum, pageSize);
         QueryWrapper<Scenic> queryWrapper = new QueryWrapper<>();
         if(!"".equals(sceName)){
-            queryWrapper.like("sceName",sceName);
+            queryWrapper.like("sce_name",sceName);
         }
-        if(!"".equals(sceThemeName)){
-            queryWrapper.like("sceThemeName",sceThemeName);
+        if(!"".equals(sceThemeid)){
+            queryWrapper.like("sce_themeid",sceThemeid);
         }
         queryWrapper.orderByDesc("scenic_id");
         return scenicService.page(page,queryWrapper);

@@ -31,8 +31,8 @@ public class StrategyController {
     //查询所有数据
     public List<Strategy> findAll() {return strategyService.list();}
 
-    @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable Integer id){
+    @DeleteMapping("/delete")
+    public boolean delete(@RequestParam Integer id){
         //删除
         return strategyService.removeById(id);
     }
@@ -41,14 +41,14 @@ public class StrategyController {
     public IPage<Strategy> findPage(@RequestParam Integer pageNum,
                                     @RequestParam Integer pageSize,
                                     @RequestParam(defaultValue = "") String straTitle,
-                                    @RequestParam(defaultValue = "") String straThemeName){
+                                    @RequestParam(defaultValue = "") String straThemeid){
         IPage<Strategy> page = new Page<>(pageNum, pageSize);
         QueryWrapper<Strategy> queryWrapper = new QueryWrapper<>();
         if(!"".equals(straTitle)){
-            queryWrapper.like("straTitle",straTitle);
+            queryWrapper.like("stra_title",straTitle);
         }
-        if(!"".equals(straThemeName)){
-            queryWrapper.like("straThemeName",straThemeName);
+        if(!"".equals(straThemeid)){
+            queryWrapper.like("stra_themeid",straThemeid);
         }
         queryWrapper.orderByDesc("strategy_id");
         return strategyService.page(page,queryWrapper);
