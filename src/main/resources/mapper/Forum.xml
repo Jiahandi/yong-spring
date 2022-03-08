@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xian.yong.mapper.ForumMapper">
+    <update id="update">
+        update `forum`
+        <set>
+            <if test="forumName != null">
+                forumName = #{forumName},
+            </if>
+            <if test="forumTitle != null">
+                forumTitle = #{forumTitle},
+            </if>
+            <if test="forumTime != null">
+                forumTime = #{forumTime},
+            </if>
+
+            <if test="forumContent != null">
+                forumContent = #{forumContent},
+            </if>
+        </set>
+        <where>
+            forumId = #{forumId}
+        </where>
+
+    </update>
+</mapper>

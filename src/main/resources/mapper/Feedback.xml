@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xian.yong.mapper.FeedbackMapper">
+    <update id="update">
+        update `feedback`
+        <set>
+            <if test="fbUser != null">
+                fbUser = #{fbUser},
+            </if>
+            <if test="fbContent != null">
+                fbContent = #{fbContent},
+            </if>
+            <if test="fbImage != null">
+                fbImage = #{fbImage},
+            </if>
+        </set>
+        <where>
+            fbId = #{fbId}
+        </where>
+
+    </update>
+</mapper>

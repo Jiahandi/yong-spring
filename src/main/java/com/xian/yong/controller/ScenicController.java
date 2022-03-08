@@ -3,7 +3,6 @@ package com.xian.yong.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.xian.yong.entity.Admin;
 import com.xian.yong.entity.Scenic;
 import com.xian.yong.mapper.ScenicMapper;
 import com.xian.yong.service.ScenicService;
