@@ -38,10 +38,14 @@ public class FeedbackController {
     @GetMapping("/page")
     public IPage<Feedback> findPage(@RequestParam Integer pageNum,
                                  @RequestParam Integer pageSize,
+                                    @RequestParam(defaultValue = "") String fbUser,
                                  @RequestParam(defaultValue = "") String fbContent
     ){
         IPage<Feedback> page = new Page<>(pageNum, pageSize);
         QueryWrapper<Feedback> queryWrapper = new QueryWrapper<>();
+        if(!"".equals(fbUser)){
+            queryWrapper.like("fb_user",fbUser);
+        }
         if(!"".equals(fbContent)){
             queryWrapper.like("fb_content",fbContent);
         }

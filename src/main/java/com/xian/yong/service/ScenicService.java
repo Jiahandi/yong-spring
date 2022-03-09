@@ -15,5 +15,4 @@ public class ScenicService extends ServiceImpl<ScenicMapper, Scenic> {
             return updateById(scenic);
         }
     }
-
 }
