@@ -1,13 +1,10 @@
 package com.xian.yong.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 @Data
-public class Admin extends AdminDto {
-    @TableId(type = IdType.AUTO) //指定主键类型
+public class AdminDto {
     private Integer adid;
     private String adname;
     private String adpassword;
@@ -15,5 +12,5 @@ public class Admin extends AdminDto {
 
     @TableField(value="type_name")
     private String typename;
-
+//    private String token;
 }

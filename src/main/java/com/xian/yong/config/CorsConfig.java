@@ -1,4 +1,4 @@
-package com.xian.yong.common;
+package com.xian.yong.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

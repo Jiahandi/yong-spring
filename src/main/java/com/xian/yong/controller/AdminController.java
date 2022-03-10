@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xian.yong.entity.Admin;
+import com.xian.yong.entity.AdminDto;
 import com.xian.yong.entity.User;
 import com.xian.yong.mapper.AdminMapper;
 import com.xian.yong.service.AdminService;
@@ -24,13 +25,13 @@ public class AdminController {
     private AdminService adminService;
 
     @PostMapping("/login")
-    public boolean login(@RequestBody Admin admin){
-        String adname = admin.getAdname();
-        String adpassword = admin.getAdpassword();
+    public boolean login(@RequestBody AdminDto adminDto){
+        String adname = adminDto.getAdname();
+        String adpassword = adminDto.getAdpassword();
         if(StrUtil.isBlank(adname) || StrUtil.isBlank(adpassword)){
             return false;
         }
-        return adminService.login(admin);
+        return adminService.login(adminDto);
     }
 
     @PostMapping
