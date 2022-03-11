@@ -4,14 +4,13 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xian.yong.common.Constants;
+import com.xian.yong.common.Result;
 import com.xian.yong.entity.Admin;
 import com.xian.yong.entity.AdminDto;
-import com.xian.yong.entity.User;
 import com.xian.yong.mapper.AdminMapper;
 import com.xian.yong.service.AdminService;
-import com.xian.yong.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,13 +24,14 @@ public class AdminController {
     private AdminService adminService;
 
     @PostMapping("/login")
-    public boolean login(@RequestBody AdminDto adminDto){
+    public Result login(@RequestBody AdminDto adminDto){
         String adname = adminDto.getAdname();
         String adpassword = adminDto.getAdpassword();
         if(StrUtil.isBlank(adname) || StrUtil.isBlank(adpassword)){
-            return false;
+            return Result.error(Constants.CODE_400,"参数错误");
         }
-        return adminService.login(adminDto);
+        AdminDto dto = adminService.login(adminDto);
+        return Result.success(dto);
     }
 
     @PostMapping

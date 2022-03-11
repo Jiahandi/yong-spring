@@ -1,18 +1,22 @@
 package com.xian.yong.controller;
 
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xian.yong.common.Constants;
+import com.xian.yong.common.Result;
+
 import com.xian.yong.entity.User;
+import com.xian.yong.entity.UserDto;
 import com.xian.yong.mapper.UserMapper;
 import com.xian.yong.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -27,6 +31,15 @@ public class UserController {
     public boolean save(@RequestBody User user) {
         //新增或更新都在这
         return userService.saveUser(user);
+    }
+    @PostMapping("/register")
+    public Result register(@RequestBody UserDto userDto){
+        String username = userDto.getUsername();
+        String password = userDto.getPassword();
+        if(StrUtil.isBlank(username) || StrUtil.isBlank(password)){
+            return Result.error(Constants.CODE_400,"参数错误");
+        }
+        return Result.success(userService.register(userDto));
     }
 
     @GetMapping
