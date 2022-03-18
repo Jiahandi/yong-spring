@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80027
 File Encoding         : 65001
 
-Date: 2022-03-09 15:42:53
+Date: 2022-03-18 10:35:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,15 +25,16 @@ CREATE TABLE `admin` (
   `adpassword` varchar(20) NOT NULL,
   `type` int DEFAULT NULL,
   `type_name` varchar(10) DEFAULT NULL,
+  `token` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`adid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1010 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=1011 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES ('1001', 'xian', '123456', '0', '普通管理员');
-INSERT INTO `admin` VALUES ('1007', 'yyy', '123', '0', '普通管理员');
-INSERT INTO `admin` VALUES ('1008', 'qqqqq', '000000', '0', '普通管理员');
+INSERT INTO `admin` VALUES ('1001', 'xian', '123456', '0', '普通管理员', null);
+INSERT INTO `admin` VALUES ('1007', 'yyy', '123', '0', '普通管理员', null);
+INSERT INTO `admin` VALUES ('1008', 'qqqqq', '000000', '0', '普通管理员', null);
 
 -- ----------------------------
 -- Table structure for `feedback`
@@ -56,6 +57,28 @@ INSERT INTO `feedback` VALUES ('2', '游客', '容易出bug', null, '2022-03-08 
 INSERT INTO `feedback` VALUES ('3', '游客', '界面不美观', null, '2022-03-08 16:37:52');
 INSERT INTO `feedback` VALUES ('4', 'xian', '225566', '', '2022-03-09 15:37:41');
 INSERT INTO `feedback` VALUES ('5', 'xian', '8555555555', '', '2022-03-09 15:37:54');
+
+-- ----------------------------
+-- Table structure for `file`
+-- ----------------------------
+DROP TABLE IF EXISTS `file`;
+CREATE TABLE `file` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `size` bigint NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `md5` varchar(255) NOT NULL,
+  `is_delete` tinyint(1) NOT NULL DEFAULT '0',
+  `is_enable` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
+
+-- ----------------------------
+-- Records of file
+-- ----------------------------
+INSERT INTO `file` VALUES ('5', 'syq.jpg', 'jpg', '211327', 'http://localhost:9090/file/7079f97535e54731b085d3e83979d89e.jpg', 'e8a4c65d4973f17c486eacc4ffe634d8', '0', '1');
+INSERT INTO `file` VALUES ('8', '111.jpg', 'jpg', '211327', 'http://localhost:9090/file/7079f97535e54731b085d3e83979d89e.jpg', 'e8a4c65d4973f17c486eacc4ffe634d8', '0', '1');
 
 -- ----------------------------
 -- Table structure for `forum`
@@ -147,7 +170,7 @@ CREATE TABLE `user` (
   `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `avatar_url` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 
 -- ----------------------------
 -- Records of user
@@ -156,3 +179,4 @@ INSERT INTO `user` VALUES ('1', 'xxxxxx', '1234567', '13566562287', '45222351312
 INSERT INTO `user` VALUES ('3', '333333', '3333', '33333', '333333', '2022-03-04 15:18:54', 'https://pic4.zhimg.com/v2-9ddea817568d692ed605a6425471a813_r.jpg');
 INSERT INTO `user` VALUES ('4', '444444', '4444444444', '44444444', '4444444', '2022-03-04 15:19:40', 'https://pic2.zhimg.com/80/v2-9807ee8a75a5fc9eba1491e5b010d659_720w.jpg');
 INSERT INTO `user` VALUES ('5', '猪八戒', '52136452', '125996355411', '12633520210', '2022-03-04 15:19:39', 'https://pic3.zhimg.com/80/v2-48f08fa1787895e22f9a635282f6d11c_720w.jpg?source=1940ef5c');
+INSERT INTO `user` VALUES ('6', 'bbbbb', '000000', '12699633545', null, '2022-03-16 19:51:22', null);
