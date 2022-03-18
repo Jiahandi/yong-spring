@@ -7,7 +7,11 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xian.yong.common.Result;
 import com.xian.yong.entity.Files;
+import com.xian.yong.entity.User;
 import com.xian.yong.mapper.FileMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -119,5 +123,31 @@ public class FileController {
         queryWrapper.eq("md5",md5);
         List<Files> filesList = fileMapper.selectList(queryWrapper);
         return filesList.size() == 0 ? null : filesList.get(0);
+    }
+
+    @DeleteMapping("/delete")
+    public Result delete(@RequestParam Integer id){//传id
+        //删除
+        Files files = fileMapper.selectById(id);
+        files.setIsDelete(true);
+        return Result.success(fileMapper.updateById(files));
+    }
+
+    //分页查询-- mybatis-plus的方式
+    @GetMapping("/page")
+    public Result findPage(@RequestParam Integer pageNum,
+                                @RequestParam Integer pageSize,
+                                @RequestParam(defaultValue = "") String name){
+
+
+        QueryWrapper<Files> queryWrapper = new QueryWrapper<>();
+        //查询未删除的记录
+        queryWrapper.eq("is_delete",false);
+        queryWrapper.orderByDesc("id");
+        if(!"".equals(name)){
+            queryWrapper.like("name",name);
+        }
+
+        return Result.success(fileMapper.selectPage(new Page<>(pageNum,pageSize),queryWrapper));
     }
 }
