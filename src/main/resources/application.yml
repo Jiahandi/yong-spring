@@ -29,3 +29,6 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+files:
+  upload:
+    path: D:/spring-yong/files/

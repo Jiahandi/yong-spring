@@ -8,8 +8,8 @@
             <if test="type != null">
                 type = #{type},
             </if>
-            <if test="typaname != null">
-                typaname = #{typaname},
+            <if test="typename != null">
+                typename = #{typename},
             </if>
 
         </set>

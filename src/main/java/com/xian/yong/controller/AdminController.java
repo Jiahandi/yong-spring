@@ -10,6 +10,7 @@ import com.xian.yong.entity.Admin;
 import com.xian.yong.entity.AdminDto;
 import com.xian.yong.mapper.AdminMapper;
 import com.xian.yong.service.AdminService;
+import com.xian.yong.utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,6 +61,9 @@ public class AdminController {
         if(!"".equals(adid)){
             queryWrapper.like("adid",adid);
         }
+        //获取当前用户信息
+        Admin currentAdmin =  TokenUtils.getCurrentAdmin();
+        System.out.println(currentAdmin);
         queryWrapper.orderByDesc("adid");
         return adminService.page(page,queryWrapper);
     }

@@ -12,5 +12,5 @@ public class AdminDto {
 
     @TableField(value="type_name")
     private String typename;
-//    private String token;
+    private String token;
 }
