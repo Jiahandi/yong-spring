@@ -13,8 +13,8 @@ public class User {
 
     @TableId(type = IdType.AUTO) //指定主键类型
     private Integer id;
+    private String openId;
     private String username;
-    private String password;
     private String tel;
     private String email;
     private String createtime;

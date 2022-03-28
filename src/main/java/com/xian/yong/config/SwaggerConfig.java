@@ -10,7 +10,6 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
-
 @Configuration
 @EnableOpenApi
 public class SwaggerConfig {
@@ -37,7 +36,7 @@ public class SwaggerConfig {
 
     /**
      * 创建该API的基本信息（这些基本信息会展现在文档页面中）
-     * 访问地址：http://ip:port/swagger-ui.html
+     *
      *
      * @return
      */

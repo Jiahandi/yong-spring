@@ -32,3 +32,7 @@ mybatis-plus:
 files:
   upload:
     path: D:/spring-yong/files/
+
+wechat:
+  appid: "wx234326c62739ecc9"
+  secret: "076d64197e9d8bb7c3a8102f2207e4a0"
