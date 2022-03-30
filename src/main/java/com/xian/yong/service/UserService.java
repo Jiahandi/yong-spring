@@ -8,6 +8,7 @@ import com.xian.yong.entity.User;
 import com.xian.yong.entity.UserDto;
 import com.xian.yong.exception.ServiceException;
 import com.xian.yong.mapper.UserMapper;
+import com.xian.yong.utils.TokenUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,6 +28,8 @@ public class UserService extends ServiceImpl<UserMapper, User> {
             BeanUtil.copyProperties(userDto, one, true);
             save(one); //把copy完之后的用户对象存储到数据库
         }
+        String token = TokenUtils.getToken(one.getId().toString(),one.getOpenId());
+        one.setToken(token);
         return one;
     }
 

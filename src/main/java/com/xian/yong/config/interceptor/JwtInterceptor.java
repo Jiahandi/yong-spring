@@ -8,8 +8,10 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import com.xian.yong.common.Constants;
 import com.xian.yong.entity.Admin;
+import com.xian.yong.entity.User;
 import com.xian.yong.exception.ServiceException;
 import com.xian.yong.service.AdminService;
+import com.xian.yong.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -22,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 public class JwtInterceptor implements  HandlerInterceptor{
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private UserService userService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader("token");
@@ -36,14 +40,17 @@ public class JwtInterceptor implements  HandlerInterceptor{
         }
 
         // 获取 token 中的 admin id
-        String adid;
+        String adid,id;
         try {
             adid = JWT.decode(token).getAudience().get(0);
+            id = JWT.decode(token).getAudience().get(0);
         } catch (JWTDecodeException j) {
             throw new ServiceException(Constants.CODE_401, "token验证失败，请重新登录");
         }
         //根据token中的admin查询数据库
         Admin admin = adminService.getById(adid);
+        User user = userService.getById(id);
+        if(user != null){ return true;}
         if (admin == null) {
             throw new ServiceException(Constants.CODE_401,"用户不存在，请重新登录");
         }

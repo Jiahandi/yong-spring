@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @TableName(value = "user")//设置对应数据库名
 //创建实体类名User和数据库对应
-public class User {
+public class User extends UserDto{
 
     @TableId(type = IdType.AUTO) //指定主键类型
     private Integer id;
@@ -18,6 +18,7 @@ public class User {
     private String tel;
     private String email;
     private String createtime;
+    private String token;
 
     @TableField(value="avatar_url")
     private String avatar;

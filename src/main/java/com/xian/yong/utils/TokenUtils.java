@@ -5,7 +5,9 @@ import cn.hutool.core.util.StrUtil;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.xian.yong.entity.Admin;
+import com.xian.yong.entity.User;
 import com.xian.yong.service.AdminService;
+import com.xian.yong.service.UserService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -21,13 +23,22 @@ import java.util.Date;
 @Component
 public class TokenUtils {
     private static AdminService staticAdminService;
+    private static UserService staticUserService;
 
     @Resource
     private AdminService adminService;
 
+    @Resource
+    private UserService userService;
+
     @PostConstruct
     public void setAdminService(){
         staticAdminService = adminService;
+    }
+
+    @PostConstruct
+    public void setUserService(){
+        staticUserService = userService;
     }
 
     public static String getToken(String adid, String sign){
@@ -36,7 +47,7 @@ public class TokenUtils {
                 .sign(Algorithm.HMAC256(sign)); // 以 password 作为 token 的密钥
     }
 
-    //获取当前登录用户信息
+    //获取当前登录管理员信息
     public static Admin getCurrentAdmin(){
         try{
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -45,6 +56,22 @@ public class TokenUtils {
             if(StrUtil.isNotBlank(token)){
                 String adid = JWT.decode(token).getAudience().get(0);
                 return staticAdminService.getById(Integer.valueOf(adid));
+            }
+        } catch (Exception e){
+            return null;
+        }
+        return null;
+    }
+
+    //获取当前登录用户信息
+    public static User getCurrentUser(){
+        try{
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            String token = request.getHeader("token");
+
+            if(StrUtil.isNotBlank(token)){
+                String id = JWT.decode(token).getAudience().get(0);
+                return staticUserService.getById(Integer.valueOf(id));
             }
         } catch (Exception e){
             return null;

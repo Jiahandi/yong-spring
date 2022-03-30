@@ -5,10 +5,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xian.yong.common.Constants;
 import com.xian.yong.common.Result;
+import com.xian.yong.entity.Admin;
 import com.xian.yong.entity.User;
 import com.xian.yong.entity.UserDto;
 import com.xian.yong.mapper.UserMapper;
 import com.xian.yong.service.UserService;
+import com.xian.yong.utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -83,6 +85,8 @@ public class UserController {
         if(!"".equals(address)){
             queryWrapper.like("address",address);
         }
+        User currentUser =  TokenUtils.getCurrentUser();
+//        System.out.println(currentUser);
         queryWrapper.orderByDesc("id");
         return userService.page(page,queryWrapper);
     }
