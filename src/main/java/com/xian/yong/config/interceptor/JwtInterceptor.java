@@ -38,7 +38,6 @@ public class JwtInterceptor implements  HandlerInterceptor{
         if (StrUtil.isBlank(token)) {
             throw new ServiceException(Constants.CODE_401,"无token，请重新登录");
         }
-
         // 获取 token 中的 admin id
         String adid,id;
         try {

@@ -17,4 +17,5 @@ public class Forum {
     private String forumCategoryname;
     private String forumContent;
     private String forumPageview;
+    private String forumAvatar;
 }

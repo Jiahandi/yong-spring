@@ -25,7 +25,13 @@ public class ForumController {
     }
 
     @GetMapping
-    public List<Forum> findAll(){return forumService.list();}
+    public List<Forum> findAll(@RequestParam(defaultValue = "") String forumTitle){
+        QueryWrapper<Forum> queryWrapper = new QueryWrapper<>();
+        if(!"".equals(forumTitle)){
+            queryWrapper.like("forum_title",forumTitle);
+        }
+        return forumService.list(queryWrapper);
+    }
 
     @DeleteMapping("/delete")
     public boolean delete(@RequestParam Integer id){//传id
@@ -36,20 +42,22 @@ public class ForumController {
     @GetMapping("/page")
     public IPage<Forum> findPage(@RequestParam Integer pageNum,
                                     @RequestParam Integer pageSize,
+                                    @RequestParam(defaultValue = "") String forumName,
                                     @RequestParam(defaultValue = "") String forumTitle,
                                     @RequestParam(defaultValue = "") String forumCategoryid
     ){
         IPage<Forum> page = new Page<>(pageNum, pageSize);
         QueryWrapper<Forum> queryWrapper = new QueryWrapper<>();
+        if(!"".equals(forumName)){
+            queryWrapper.like("forum_name",forumName);
+        }
         if(!"".equals(forumTitle)){
             queryWrapper.like("forum_title",forumTitle);
         }
         if(!"".equals(forumCategoryid)){
             queryWrapper.like("forum_categoryid",forumCategoryid);
         }
-        queryWrapper.orderByDesc("forum_id");
+        queryWrapper.orderByDesc("forum_pageview");
         return forumService.page(page,queryWrapper);
     }
-
-
 }

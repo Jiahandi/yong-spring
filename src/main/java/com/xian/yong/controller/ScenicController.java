@@ -27,8 +27,21 @@ public class ScenicController {
     }
 
     @GetMapping
-    public List<Scenic> findAll() {
-        return scenicService.list();
+    public List<Scenic> findAll(@RequestParam(defaultValue = "") String scenicId,
+                                @RequestParam(defaultValue = "") String sceThemeid,
+                                @RequestParam(defaultValue = "") String sceName
+                                ) {
+        QueryWrapper<Scenic> queryWrapper = new QueryWrapper<>();
+        if(!"".equals(scenicId)){
+            queryWrapper.like("scenic_id",scenicId);
+        }
+        if(!"".equals(sceThemeid)){
+            queryWrapper.like("sce_themeid",sceThemeid);
+        }
+        if(!"".equals(sceName)){
+            queryWrapper.like("sce_name",sceName);
+        }
+        return scenicService.list(queryWrapper);
     }
     @DeleteMapping("/delete")
     public boolean delete(@RequestParam Integer id){//传id
