@@ -29,7 +29,28 @@ public class StrategyController {
 
     @GetMapping
     //查询所有数据
-    public List<Strategy> findAll() {return strategyService.list();}
+    public List<Strategy> findAll(
+            @RequestParam(defaultValue = "") String strategyId,
+            @RequestParam(defaultValue = "") String straThemeid,
+            @RequestParam(defaultValue = "") String straTitle,
+            @RequestParam(defaultValue = "") String straUser
+            ) {
+        QueryWrapper<Strategy> queryWrapper = new QueryWrapper<>();
+        if(!"".equals(strategyId)){
+            queryWrapper.like("strategy_id",strategyId);
+        }
+        if(!"".equals(straThemeid)){
+            queryWrapper.like("stra_themeid",straThemeid);
+        }
+        if(!"".equals(straTitle)){
+            queryWrapper.like("stra_title",straTitle);
+        }
+        if(!"".equals(straUser)){
+            queryWrapper.like("stra_user",straUser);
+        }
+
+        return strategyService.list(queryWrapper);
+    }
 
     @DeleteMapping("/delete")
     public boolean delete(@RequestParam Integer id){

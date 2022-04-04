@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xian.yong.common.Constants;
 import com.xian.yong.common.Result;
-import com.xian.yong.entity.Admin;
 import com.xian.yong.entity.User;
 import com.xian.yong.entity.UserDto;
 import com.xian.yong.mapper.UserMapper;
@@ -44,8 +43,12 @@ public class UserController {
 
     @GetMapping
         //查询所有数据
-    public List<User> findAll() {
-        return userService.list();
+    public List<User> findAll(@RequestParam(defaultValue = "") String username) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        if(!"".equals(username)){
+            queryWrapper.like("username",username);
+        }
+        return userService.list(queryWrapper);
     }
 
     @DeleteMapping("/delete")

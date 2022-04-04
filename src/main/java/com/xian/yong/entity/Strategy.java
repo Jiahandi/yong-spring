@@ -11,6 +11,7 @@ public class Strategy {
     @TableId(type = IdType.AUTO) //指定主键类型
     private Integer strategyId;
     private String straUser;
+    private String straUseravatar;
     private String straTitle;
     private String straScenic;
     private Integer straThemeid;
@@ -18,6 +19,6 @@ public class Strategy {
     private String straContent;
     private String straTime;
     private String straLove;
-    private String straCollect;
     private String straPageview;
+    private String straImage;
 }

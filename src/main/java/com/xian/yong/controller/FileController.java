@@ -6,12 +6,11 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xian.yong.common.Result;
 import com.xian.yong.entity.Files;
-import com.xian.yong.entity.User;
 import com.xian.yong.mapper.FileMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +18,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 文件上传相关接口
@@ -42,6 +43,7 @@ public class FileController {
 
     @Resource
     private FileMapper fileMapper;
+
     @PostMapping("/upload")
     public String upload(@RequestParam MultipartFile file) throws IOException {
         String originalFilename = file.getOriginalFilename();
@@ -92,6 +94,8 @@ public class FileController {
         return url;
     }
 
+
+
     /**
      * 文件下载接口 http://localhost:9090/file/fileUUID
      * @param fileUUID
@@ -131,6 +135,51 @@ public class FileController {
         Files files = fileMapper.selectById(id);
         files.setIsDelete(true);
         return Result.success(fileMapper.updateById(files));
+    }
+    @PostMapping("/multipleUpload")
+    public List multipleUpload(@RequestParam("files") List<MultipartFile> files) throws IOException {
+        List<String> root=new ArrayList<>();
+        for (MultipartFile file : files) {    //循环保存文件
+            String originalFilename = file.getOriginalFilename();
+            String type = FileUtil.extName(originalFilename);
+            long size = file.getSize();
+            //定义一个文件唯一的标识码
+            String uuid = IdUtil.fastSimpleUUID();
+            String fileUUID = uuid + StrUtil.DOT + type;
+
+            File uploadFile = new File(fileUploadPath + fileUUID);
+
+            //判断配置文件目录是否存在，若不存在则创建一个新的文件目录
+            if(!uploadFile.getParentFile().exists()){
+                uploadFile.getParentFile().mkdirs();
+            }
+
+            String url;
+            //上传文件到磁盘
+            //把获取到的文件存储到磁盘目录
+            file.transferTo(uploadFile);
+            //获取文件的md5 通过对比md5避免重复上传相同内容的文件
+            String md5 = SecureUtil.md5(uploadFile);
+            //从数据库查询是否存在相同的记录
+            Files dbFiles = getFileByMd5(md5);
+            if(dbFiles != null){
+                url = dbFiles.getUrl();
+                //由于文件已存在，所以删除刚才上传的重复文件
+                uploadFile.delete();
+            } else{
+                //数据库若不存在，则不删除刚才上传的文件
+                url = "http://localhost:9090/file/" + fileUUID;
+            }
+            Files saveFile = new Files();
+            saveFile.setName(originalFilename);
+            saveFile.setType(type);
+            saveFile.setSize(size);
+            saveFile.setUrl(url);
+            saveFile.setMd5(md5);
+            fileMapper.insert(saveFile);
+            root.add(url);
+        }
+        return root;
     }
 
     //分页查询-- mybatis-plus的方式
