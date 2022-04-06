@@ -28,7 +28,7 @@ public class StrimageController {
         if(!"".equals(strId)){
             queryWrapper.like("str_id",strId);
         }
-        return strimageService.list();
+        return strimageService.list(queryWrapper);
     }
 
     @DeleteMapping("/delete")

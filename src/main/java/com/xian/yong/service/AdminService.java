@@ -38,7 +38,6 @@ public class AdminService extends ServiceImpl<AdminMapper, Admin>{
             throw new ServiceException(Constants.CODE_600,"用户名或密码错误");
         }
 
-
     }
 
     public boolean saveAdmin(Admin admin) {
