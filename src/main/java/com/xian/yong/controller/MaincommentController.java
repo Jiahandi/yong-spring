@@ -1,7 +1,10 @@
 package com.xian.yong.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xian.yong.common.Result;
 import com.xian.yong.entity.Maincomment;
+import com.xian.yong.entity.Subcomment;
 import com.xian.yong.mapper.MaincomnentMapper;
 import com.xian.yong.service.MaincommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +44,13 @@ public class MaincommentController {
     public boolean delete(@RequestParam Integer id){//传id
         //删除
         return maincommentService.removeById(id);
+    }
+
+    @GetMapping("/page")
+    public Result findPage(@RequestParam Integer pageNum,
+                           @RequestParam Integer pageSize){
+        QueryWrapper<Maincomment> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("com_id");
+        return Result.success(maincomnentMapper.selectPage(new Page<>(pageNum,pageSize),queryWrapper));
     }
 }

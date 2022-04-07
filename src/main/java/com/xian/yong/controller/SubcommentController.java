@@ -1,6 +1,9 @@
 package com.xian.yong.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xian.yong.common.Result;
+import com.xian.yong.entity.Files;
 import com.xian.yong.entity.Subcomment;
 import com.xian.yong.mapper.SubcommentMapper;
 import com.xian.yong.service.SubcommentService;
@@ -41,6 +44,14 @@ public class SubcommentController {
     public boolean delete(@RequestParam Integer id){//传id
         //删除
         return subcommentService.removeById(id);
+    }
+
+    @GetMapping("/page")
+    public Result findPage(@RequestParam Integer pageNum,
+                           @RequestParam Integer pageSize){
+        QueryWrapper<Subcomment> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("sub_id");
+        return Result.success(subcommentMapper.selectPage(new Page<>(pageNum,pageSize),queryWrapper));
     }
 
 }
