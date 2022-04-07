@@ -1,7 +1,6 @@
 package com.xian.yong.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.xian.yong.entity.Forum;
 import com.xian.yong.entity.Lovelist;
 import com.xian.yong.mapper.LoveListMapper;
 import com.xian.yong.service.LoveListService;
