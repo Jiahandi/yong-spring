@@ -81,7 +81,7 @@ public class FileController {
             uploadFile.delete();
         } else{
             //数据库若不存在，则不删除刚才上传的文件
-            url = "http://localhost:9090/file/" + fileUUID;
+            url = "http://106.12.17.164:9090/file/" + fileUUID;
         }
         //存储数据库
         Files saveFile = new Files();
@@ -146,16 +146,12 @@ public class FileController {
             //定义一个文件唯一的标识码
             String uuid = IdUtil.fastSimpleUUID();
             String fileUUID = uuid + StrUtil.DOT + type;
-
             File uploadFile = new File(fileUploadPath + fileUUID);
-
             //判断配置文件目录是否存在，若不存在则创建一个新的文件目录
             if(!uploadFile.getParentFile().exists()){
                 uploadFile.getParentFile().mkdirs();
             }
-
             String url;
-            //上传文件到磁盘
             //把获取到的文件存储到磁盘目录
             file.transferTo(uploadFile);
             //获取文件的md5 通过对比md5避免重复上传相同内容的文件
@@ -168,7 +164,7 @@ public class FileController {
                 uploadFile.delete();
             } else{
                 //数据库若不存在，则不删除刚才上传的文件
-                url = "http://localhost:9090/file/" + fileUUID;
+                url = "http://106.12.17.164:9090/file/" + fileUUID;
             }
             Files saveFile = new Files();
             saveFile.setName(originalFilename);

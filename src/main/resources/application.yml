@@ -6,12 +6,13 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     # 数据库连接地址
-    url: jdbc:mysql://localhost:3306/yong-you?characterEncoding=UTF8&serverTimezone=GMT%2B8
+    url: jdbc:mysql://106.12.17.164:3306/yong-you?characterEncoding=UTF8&serverTimezone=GMT%2B8
     # 数据库用户名&密码：
     username: root
     password: 123456
 # 应用服务 WEB 访问端口
 server:
+  ip: 106.12.17.164
   port: 9090
 #下面这些内容是为了让MyBatis映射
 #指定Mybatis的Mapper文件
@@ -31,7 +32,9 @@ mybatis-plus:
 
 files:
   upload:
-    path: D:/spring-yong/files/
+#    path: D:/spring-yong/files/
+    # 服务器路径
+    path: /home/files/
 
 wechat:
   appid: "wx234326c62739ecc9"
